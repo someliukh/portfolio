@@ -1,0 +1,673 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Geist:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004f53",
+                        "on-primary": "#003739",
+                        "on-secondary-container": "#6b4b00",
+                        "outline-variant": "#3a494a",
+                        "primary": "#e9feff",
+                        "inverse-surface": "#e5e2e3",
+                        "surface-container-low": "#1c1b1c",
+                        "on-primary-fixed": "#002021",
+                        "tertiary-fixed-dim": "#c8c6c8",
+                        "primary-fixed-dim": "#00dce5",
+                        "surface-container-lowest": "#0e0e0f",
+                        "primary-fixed": "#63f7ff",
+                        "surface-bright": "#3a393a",
+                        "on-primary-container": "#006c71",
+                        "background": "#131314",
+                        "on-tertiary-fixed": "#1b1b1d",
+                        "on-surface": "#e5e2e3",
+                        "inverse-primary": "#00696e",
+                        "secondary": "#ffdb9d",
+                        "on-surface-variant": "#b9caca",
+                        "surface-container-highest": "#353436",
+                        "outline": "#849495",
+                        "on-secondary-fixed-variant": "#5e4200",
+                        "surface-variant": "#353436",
+                        "secondary-container": "#feb700",
+                        "on-background": "#e5e2e3",
+                        "surface": "#131314",
+                        "tertiary": "#fcf9fc",
+                        "tertiary-container": "#e0dddf",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#e4e2e4",
+                        "inverse-on-surface": "#313031",
+                        "on-tertiary-fixed-variant": "#474649",
+                        "on-error-container": "#ffdad6",
+                        "surface-container": "#201f20",
+                        "on-tertiary": "#303032",
+                        "primary-container": "#00f5ff",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#271900",
+                        "on-error": "#690005",
+                        "surface-container-high": "#2a2a2b",
+                        "surface-dim": "#131314",
+                        "secondary-fixed": "#ffdea8",
+                        "surface-tint": "#00dce5",
+                        "on-tertiary-container": "#626163",
+                        "on-secondary": "#412d00",
+                        "secondary-fixed-dim": "#ffba20"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "grid-dot-gap": "24px",
+                        "grid-dot-size": "1px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-desktop": "48px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-md": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "code-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "code-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-grid-dot {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .glass-card {
+            background: rgba(32, 31, 32, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(132, 148, 149, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(0, 220, 229, 0.4);
+            box-shadow: 0 0 20px rgba(0, 220, 229, 0.1);
+        }
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2em;
+            background-color: #00dce5;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .constellation-line {
+            stroke: rgba(0, 220, 229, 0.15);
+            stroke-dasharray: 4;
+            animation: flow 10s linear infinite;
+        }
+        @keyframes flow {
+            from { stroke-dashoffset: 100; }
+            to { stroke-dashoffset: 0; }
+        }
+        .glow-cyan { text-shadow: 0 0 10px rgba(0, 220, 229, 0.5); }
+        
+        .particle-flow {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00dce5;
+            border-radius: 50%;
+            filter: blur(1px);
+            box-shadow: 0 0 6px #00dce5;
+            offset-rotate: 0deg;
+            opacity: 0;
+            animation: particle-move 6s linear infinite;
+        }
+        @keyframes particle-move {
+            0% { offset-distance: 0%; opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { offset-distance: 100%; opacity: 0; }
+        }
+        
+        /* Sidebar Active State Indicator */
+        .sidebar-link {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .sidebar-link.active {
+            background: rgba(0, 220, 229, 0.08);
+            color: #e9feff;
+        }
+        .sidebar-link.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: #00dce5;
+            box-shadow: 0 0 10px #00dce5;
+        }
+        .sidebar-link.active .material-symbols-outlined {
+            color: #00dce5;
+            text-shadow: 0 0 8px #00dce5;
+        }
+        .sidebar-link.active .status-dot {
+            color: #00dce5;
+            text-shadow: 0 0 8px #00dce5;
+        }
+        .sidebar-link:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.03);
+            color: #e9feff;
+        }
+
+        .status-indicator-pulse {
+            animation: slow-pulse 4s ease-in-out infinite;
+        }
+        @keyframes slow-pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .btn-interact {
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease;
+        }
+        .btn-interact:hover {
+            transform: translateY(-1px);
+        }
+        .btn-interact:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        @keyframes float {
+            from { transform: translateY(0) translateX(0); opacity: 0; }
+            50% { opacity: 1; }
+            to { transform: translateY(-100px) translateX(10px); opacity: 0; }
+        }
+
+        /* Sidebar Collapsible Logic */
+        .sidebar-transition {
+            transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms ease, box-shadow 300ms ease;
+        }
+        .collapsible-content {
+            transition: opacity 200ms ease;
+            white-space: nowrap;
+        }
+        aside:not(.expanded) .collapsible-content {
+            opacity: 0;
+            pointer-events: none;
+            width: 0;
+            overflow: hidden;
+        }
+        aside.expanded {
+            width: 260px !important;
+            box-shadow: 25px 0 50px -12px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md bg-grid-dot selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- OS System Header -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background/80 backdrop-blur-xl border-b border-outline-variant/30">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-xl">account_tree</span>
+<div class="text-label-caps font-label-caps font-bold text-primary tracking-widest">stepan.omeliukh</div>
+</div>
+<div class="flex gap-6 items-center">
+<div class="hidden md:flex items-center gap-4 px-4 py-1 border border-outline-variant/30 bg-surface-container-lowest/50">
+<span class="text-code-sm font-code-sm text-primary/60">SYS_TIME:</span>
+<span class="text-code-sm font-code-sm text-primary" id="sys-clock">02:49:05</span>
+</div>
+<div class="flex gap-4 items-center">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors text-[20px] active:scale-90">terminal</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors text-[20px] active:scale-90">settings_input_component</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors text-[20px] active:scale-90">notifications_none</span>
+</div>
+</div>
+</nav>
+<!-- OS Side Module (Navigation) -->
+<aside class="sidebar-transition fixed left-0 top-0 h-full z-[60] flex flex-col w-[72px] bg-surface-container/60 border-r border-outline-variant/30 backdrop-blur-3xl pt-16 overflow-hidden" id="main-sidebar">
+<div class="flex flex-col p-6 mb-4 min-h-[100px]">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-2 h-2 min-w-[8px] rounded-full bg-primary status-indicator-pulse shadow-[0_0_8px_#00dce5]"></div>
+<div class="collapsible-content text-label-caps font-label-caps text-primary leading-none text-[10px] tracking-widest">NODE_01</div>
+</div>
+<div class="collapsible-content">
+<div class="text-code-sm font-code-sm text-on-surface font-bold">STATUS: ONLINE</div>
+<div class="text-[9px] font-label-caps text-on-surface-variant/60 mt-1 tracking-tighter uppercase">UPTIME // 5Y+</div>
+</div>
+</div>
+<div class="flex flex-col gap-px flex-grow">
+<a class="sidebar-link active flex items-center justify-between px-6 py-4 text-on-surface-variant group" href="#about">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[24px] min-w-[24px]">dashboard</span>
+<span class="collapsible-content text-code-sm font-code-sm tracking-wide">CORE</span>
+</div>
+<span class="collapsible-content status-dot text-[10px]">●</span>
+</a>
+<a class="sidebar-link flex items-center justify-between px-6 py-4 text-on-surface-variant group" href="#experience">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[24px] min-w-[24px]">lan</span>
+<span class="collapsible-content text-code-sm font-code-sm tracking-wide">SERVICES</span>
+</div>
+<span class="collapsible-content status-dot text-[10px] text-on-surface-variant/30">○</span>
+</a>
+<a class="sidebar-link flex items-center justify-between px-6 py-4 text-on-surface-variant group" href="#projects">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[24px] min-w-[24px]">database</span>
+<span class="collapsible-content text-code-sm font-code-sm tracking-wide">REPOSITORY</span>
+</div>
+<span class="collapsible-content status-dot text-[10px] text-on-surface-variant/30">○</span>
+</a>
+<a class="sidebar-link flex items-center justify-between px-6 py-4 text-on-surface-variant group" href="#contact">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[24px] min-w-[24px]">terminal</span>
+<span class="collapsible-content text-code-sm font-code-sm tracking-wide">ENDPOINT</span>
+</div>
+<span class="collapsible-content status-dot text-[10px] text-on-surface-variant/30">○</span>
+</a>
+</div>
+<!-- SYSTEM HEALTH PANEL -->
+<div class="p-6 border-t border-outline-variant/10 bg-surface-container-lowest/20">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant/60">analytics</span>
+<div class="collapsible-content text-[10px] font-label-caps text-on-surface-variant tracking-[0.2em] opacity-80">SYSTEM HEALTH</div>
+</div>
+<div class="collapsible-content space-y-2">
+<div class="flex justify-between items-center group">
+<span class="text-[10px] font-label-caps text-on-surface-variant/60 group-hover:text-on-surface-variant transition-colors">CPU</span>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-code-sm text-primary">READY</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary/40 shadow-[0_0_4px_#00dce5] status-indicator-pulse"></div>
+</div>
+</div>
+<div class="flex justify-between items-center group">
+<span class="text-[10px] font-label-caps text-on-surface-variant/60 group-hover:text-on-surface-variant transition-colors">MEMORY</span>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-code-sm text-primary">STABLE</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary/40 shadow-[0_0_4px_#00dce5] status-indicator-pulse"></div>
+</div>
+</div>
+<div class="flex justify-between items-center group">
+<span class="text-[10px] font-label-caps text-on-surface-variant/60 group-hover:text-on-surface-variant transition-colors">NETWORK</span>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-code-sm text-primary">CONNECTED</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary/40 shadow-[0_0_4px_#00dce5] status-indicator-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<main class="ml-[72px] min-h-screen pt-16 border-l border-outline-variant/10">
+<!-- Hero Section -->
+<section class="relative h-[calc(100vh-64px)] flex flex-col items-center justify-center overflow-hidden" id="about">
+<!-- WebGL Shader Background -->
+<div class="absolute inset-0 w-full h-full opacity-40 z-0"><div class="absolute top-8 left-8 flex items-center gap-2 opacity-40"><span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span><span class="text-label-caps font-label-caps text-on-surface-variant/40 text-[10px] tracking-[0.3em] uppercase">SYSTEM OVERVIEW</span></div></div>
+<div class="relative z-10 w-full px-margin-desktop grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<div class="lg:col-span-8 space-y-6">
+<div class="text-label-caps font-label-caps text-primary tracking-widest mb-4 flex items-center gap-2">
+<span class="w-4 h-[1px] bg-primary"></span>
+                    DISTRIBUTED SYSTEMS ENGINEER
+                </div>
+<h1 class="text-headline-lg font-headline-lg md:text-8xl tracking-tighter leading-[0.9]">
+                    STEPAN <br> <span class="text-primary-fixed-dim">OMELIUKH</span>
+</h1>
+<p class="text-on-surface-variant text-body-lg max-w-xl">
+                    Building reliable backend platforms, distributed architectures and production-ready software.
+                </p>
+<div class="flex gap-4 pt-4">
+<button class="btn-interact px-8 py-3 bg-primary text-on-primary font-label-caps text-label-caps rounded-none transition-colors border border-primary">ESTABLISH CONNECTION</button>
+<button class="btn-interact px-8 py-3 border border-outline-variant text-on-surface-variant font-label-caps text-label-caps rounded-none hover:bg-primary/10 transition-colors">VIEW SOURCE</button>
+</div>
+</div>
+<!-- Status Panel -->
+<div class="lg:col-span-4 hidden lg:block">
+<div class="glass-card p-6 border-l-4 border-l-primary space-y-4">
+<div class="text-label-caps font-label-caps text-primary border-b border-outline-variant/30 pb-2 flex justify-between">
+<span class="">SYSTEM_STATUS</span>
+<span class="animate-pulse">_</span>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-code-sm font-code-sm text-on-surface-variant/70">AVAILABILITY:</span>
+<span class="text-code-sm font-code-sm text-primary">🟢 REMOTE_OK</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-code-sm font-code-sm text-on-surface-variant/70">COORDINATES:</span>
+<span class="text-code-sm font-code-sm">LVIV_UA</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-code-sm font-code-sm text-on-surface-variant/70">UPTIME:</span>
+<span class="text-code-sm font-code-sm">5_YEARS_PRO</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-code-sm font-code-sm text-on-surface-variant/70">ARCH_TYPE:</span>
+<span class="text-code-sm font-code-sm text-primary-fixed-dim">DISTRIBUTED</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center animate-bounce">
+<span class="text-code-sm font-code-sm text-on-surface-variant/50 mb-2">IO_SCROLL</span>
+<span class="material-symbols-outlined text-on-surface-variant">keyboard_double_arrow_down</span>
+</div>
+</section>
+<div class="border-b border-outline-variant/10 w-full"></div>
+<!-- Metrics Grid -->
+<section class="py-24 px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-px bg-outline-variant/10" id="experience">
+<div class="bg-background py-12 px-8 group border border-outline-variant/5 hover:bg-surface-container-low transition-colors duration-500">
+<div class="text-headline-lg font-headline-lg text-primary glow-cyan mb-2">5+</div>
+<div class="text-label-caps font-label-caps text-on-surface-variant group-hover:text-primary transition-colors">YEARS EXPERIENCE</div>
+</div>
+<div class="bg-background py-12 px-8 group border border-outline-variant/5 hover:bg-surface-container-low transition-colors duration-500">
+<div class="text-headline-lg font-headline-lg text-primary glow-cyan mb-2">JAVA</div>
+<div class="text-label-caps font-label-caps text-on-surface-variant group-hover:text-primary transition-colors">PRIMARY STACK</div>
+</div>
+<div class="bg-background py-12 px-8 group border border-outline-variant/5 hover:bg-surface-container-low transition-colors duration-500">
+<div class="text-headline-lg font-headline-lg text-primary glow-cyan mb-2">BE</div>
+<div class="text-label-caps font-label-caps text-on-surface-variant group-hover:text-primary transition-colors">BACKEND ENGINEERING</div>
+</div>
+<div class="bg-background py-12 px-8 group border border-outline-variant/5 hover:bg-surface-container-low transition-colors duration-500">
+<div class="text-headline-lg font-headline-lg text-primary glow-cyan mb-2">WRW</div>
+<div class="text-label-caps font-label-caps text-on-surface-variant group-hover:text-primary transition-colors">REMOTE WORLDWIDE</div>
+</div>
+</section>
+<div class="border-b border-outline-variant/10 w-full"></div>
+<!-- Engineering Principles -->
+<section class="py-32 px-margin-desktop relative">
+<div class="flex flex-col mb-16">
+<span class="text-label-caps font-label-caps text-primary mb-2">01 // CORE_PHILOSOPHY</span>
+<h2 class="text-headline-lg font-headline-lg">ENGINEERING PRINCIPLES</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="glass-card p-8 flex flex-col h-64 justify-between relative overflow-hidden group">
+<span class="material-symbols-outlined absolute -top-4 -right-4 text-8xl opacity-5 text-primary group-hover:opacity-10 transition-opacity duration-700">architecture</span>
+<div class="text-label-caps font-label-caps text-primary border-b border-primary/20 pb-2 mb-4 w-fit">PR_01</div>
+<div>
+<h3 class="text-headline-md font-headline-md mb-2">Reliability First</h3>
+<p class="text-on-surface-variant text-body-md">Building resilient systems that thrive under load and fail gracefully.</p>
+</div>
+</div>
+<div class="glass-card p-8 flex flex-col h-64 justify-between relative overflow-hidden group">
+<span class="material-symbols-outlined absolute -top-4 -right-4 text-8xl opacity-5 text-primary group-hover:opacity-10 transition-opacity duration-700">speed</span>
+<div class="text-label-caps font-label-caps text-primary border-b border-primary/20 pb-2 mb-4 w-fit">PR_02</div>
+<div>
+<h3 class="text-headline-md font-headline-md mb-2">Performance Matters</h3>
+<p class="text-on-surface-variant text-body-md">Optimizing at the architectural level for sub-millisecond response times.</p>
+</div>
+</div>
+<div class="glass-card p-8 flex flex-col h-64 justify-between relative overflow-hidden group">
+<span class="material-symbols-outlined absolute -top-4 -right-4 text-8xl opacity-5 text-primary group-hover:opacity-10 transition-opacity duration-700">account_tree</span>
+<div class="text-label-caps font-label-caps text-primary border-b border-primary/20 pb-2 mb-4 w-fit">PR_03</div>
+<div>
+<h3 class="text-headline-md font-headline-md mb-2">Clean Architecture</h3>
+<p class="text-on-surface-variant text-body-md">Decoupled logic ensuring long-term maintainability and testability.</p>
+</div>
+</div>
+<div class="glass-card p-8 flex flex-col h-64 justify-between relative overflow-hidden group">
+<span class="material-symbols-outlined absolute -top-4 -right-4 text-8xl opacity-5 text-primary group-hover:opacity-10 transition-opacity duration-700">psychology</span>
+<div class="text-label-caps font-label-caps text-primary border-b border-primary/20 pb-2 mb-4 w-fit">PR_04</div>
+<div>
+<h3 class="text-headline-md font-headline-md mb-2">Continuous Learning</h3>
+<p class="text-on-surface-variant text-body-md">Constant iteration and adoption of cutting-edge industry standards.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Selected Projects Section -->
+<section class="py-32 px-margin-desktop bg-surface-container-low/30 border-y border-outline-variant/10" id="projects">
+<div class="flex flex-col mb-16">
+<span class="text-label-caps font-label-caps text-primary mb-2">02 // PORTFOLIO</span>
+<h2 class="text-headline-lg font-headline-lg">SELECTED PROJECTS</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="glass-card p-0 group overflow-hidden border-l-4 border-l-primary">
+<div class="p-10 space-y-4">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-headline-md font-headline-md">Smart Printers</h3>
+<span class="px-3 py-1 bg-primary/10 text-primary text-code-sm font-code-sm">CLOUD_BE</span>
+</div>
+<p class="text-body-lg text-on-surface-variant leading-relaxed">
+                        Cloud-based self-service printing platform designed for high availability and secure document processing. 
+                    </p>
+<div class="flex items-center gap-2 pt-4">
+<span class="w-2 h-2 bg-secondary status-indicator-pulse rounded-full"></span>
+<span class="text-label-caps font-label-caps text-secondary tracking-widest">COMING SOON</span>
+</div>
+</div>
+</div>
+<div class="glass-card p-0 group overflow-hidden border-l-4 border-l-primary/40">
+<div class="p-10 space-y-4">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-headline-md font-headline-md">HOTAS Flight Controls</h3>
+<span class="px-3 py-1 bg-primary/10 text-primary text-code-sm font-code-sm">SYSTEMS_HARDWARE</span>
+</div>
+<p class="text-body-lg text-on-surface-variant leading-relaxed">
+                        Professional flight simulation hardware ecosystem focused on ultra-low latency input processing and modular architectural design.
+                    </p>
+<div class="flex items-center gap-2 pt-4">
+<span class="w-2 h-2 bg-secondary status-indicator-pulse rounded-full"></span>
+<span class="text-label-caps font-label-caps text-secondary tracking-widest">COMING SOON</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technologies Section (Constellation) -->
+<section class="py-32 bg-surface-container-lowest relative overflow-hidden">
+<div class="px-margin-desktop mb-16 relative z-10">
+<span class="text-label-caps font-label-caps text-primary mb-2">03 // TECH_STACK</span>
+<h2 class="text-headline-lg font-headline-lg">THE CONSTELLATION</h2>
+</div>
+<div class="h-[600px] relative w-full px-margin-desktop overflow-hidden">
+<svg class="absolute inset-0 w-full h-full z-0 pointer-events-none">
+<path class="constellation-line fill-none" d="M 20% 30% L 40% 50%" id="path1"></path>
+<path class="constellation-line fill-none" d="M 40% 50% L 60% 20%" id="path2"></path>
+<path class="constellation-line fill-none" d="M 60% 20% L 80% 60%" id="path3"></path>
+<path class="constellation-line fill-none" d="M 40% 50% L 30% 80%" id="path4"></path>
+<path class="constellation-line fill-none" d="M 80% 60% L 50% 80%" id="path5"></path>
+<path class="constellation-line fill-none" d="M 80% 30% L 75% 55%" id="path6"></path>
+</svg>
+<div class="particle-flow" style="offset-path: path('M 20% 30% L 40% 50%'); animation-delay: 0s;"></div>
+<div class="particle-flow" style="offset-path: path('M 40% 50% L 60% 20%'); animation-delay: 2s;"></div>
+<div class="particle-flow" style="offset-path: path('M 60% 20% L 80% 60%'); animation-delay: 1s;"></div>
+<div class="particle-flow" style="offset-path: path('M 80% 60% L 50% 80%'); animation-delay: 4s;"></div>
+<div class="absolute top-[25%] left-[15%] glass-card px-4 py-2 text-code-sm font-code-sm text-primary hover:bg-primary/20 cursor-default">Java 21</div>
+<div class="absolute top-[45%] left-[35%] glass-card px-4 py-2 text-code-sm font-code-sm text-primary hover:bg-primary/20 cursor-default">Spring Boot 3</div>
+<div class="absolute top-[15%] left-[55%] glass-card px-4 py-2 text-code-sm font-code-sm text-primary hover:bg-primary/20 cursor-default">Apache Kafka</div>
+<div class="absolute top-[55%] left-[75%] glass-card px-4 py-2 text-code-sm font-code-sm text-primary hover:bg-primary/20 cursor-default">Kubernetes</div>
+<div class="absolute top-[75%] left-[25%] glass-card px-4 py-2 text-code-sm font-code-sm text-primary hover:bg-primary/20 cursor-default">PostgreSQL</div>
+<div class="absolute top-[75%] left-[55%] glass-card px-4 py-2 text-code-sm font-code-sm text-primary hover:bg-primary/20 cursor-default">Redis</div>
+<div class="absolute top-[30%] left-[80%] glass-card px-4 py-2 text-code-sm font-code-sm text-primary hover:bg-primary/20 cursor-default">Docker</div>
+</div>
+</section>
+<!-- Quote & Status Section -->
+<section class="py-32 px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+<div class="space-y-8">
+<span class="material-symbols-outlined text-primary text-6xl opacity-20">format_quote</span>
+<blockquote class="text-headline-md font-headline-md italic leading-relaxed text-on-surface">
+                "Good systems aren't measured by how they perform on day one, but by how predictably they behave years later."
+            </blockquote>
+</div>
+<div class="glass-card p-12 border-l-4 border-l-primary">
+<div class="text-label-caps font-label-caps text-primary mb-8 tracking-[0.2em]">AVAILABILITY // 2024</div>
+<ul class="space-y-6">
+<li class="flex items-center gap-4 group">
+<div class="w-2 h-2 bg-primary shadow-[0_0_8px_#00dce5] status-indicator-pulse"></div>
+<span class="text-body-lg font-headline-md group-hover:translate-x-2 transition-transform">Remote Teams</span>
+</li>
+<li class="flex items-center gap-4 group">
+<div class="w-2 h-2 bg-primary shadow-[0_0_8px_#00dce5] status-indicator-pulse"></div>
+<span class="text-body-lg font-headline-md group-hover:translate-x-2 transition-transform">Product Companies</span>
+</li>
+<li class="flex items-center gap-4 group">
+<div class="w-2 h-2 bg-primary shadow-[0_0_8px_#00dce5] status-indicator-pulse"></div>
+<span class="text-body-lg font-headline-md group-hover:translate-x-2 transition-transform">Long-term Collaboration</span>
+</li>
+<li class="flex items-center gap-4 group">
+<div class="w-2 h-2 bg-primary shadow-[0_0_8px_#00dce5] status-indicator-pulse"></div>
+<span class="text-body-lg font-headline-md group-hover:translate-x-2 transition-transform">Complex Engineering Challenges</span>
+</li>
+</ul>
+</div>
+</section>
+<!-- Availability & CTA -->
+<section class="py-32 px-margin-desktop" id="contact">
+<div class="glass-card p-16 text-center max-w-4xl mx-auto relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+<h2 class="text-headline-md font-headline-md mb-4 uppercase">ESTABLISH_CONNECTION</h2>
+<p class="text-on-surface-variant text-body-lg mb-12 max-w-2xl mx-auto">Currently open to senior backend opportunities with high-growth infrastructure startups and established product organizations.</p>
+<a class="btn-interact inline-block px-12 py-4 bg-primary text-on-primary font-label-caps text-label-caps border border-primary" href="mailto:stepan@omeliukh.tech">SEND_TRANSMISSION</a>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-margin-desktop py-8 border-t border-outline-variant/10 bg-grid-dot gap-8">
+<div class="flex flex-col items-center md:items-start gap-2">
+<div class="text-label-caps font-label-caps text-secondary tracking-widest">stepan.omeliukh // OS_MODULE_v2.5</div>
+<div class="text-code-sm font-code-sm text-on-surface-variant/50 uppercase">LVIV_UA // SYSTEM_SECURE</div>
+</div>
+<div class="flex gap-8">
+<a class="text-label-caps font-label-caps text-on-surface-variant/50 hover:text-secondary transition-all hover:translate-y-[-1px]" href="#">LINKEDIN</a>
+<a class="text-label-caps font-label-caps text-on-surface-variant/50 hover:text-secondary transition-all hover:translate-y-[-1px]" href="#">GITHUB</a>
+<a class="text-label-caps font-label-caps text-on-surface-variant/50 hover:text-secondary transition-all hover:translate-y-[-1px]" href="#">RESUME</a>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant/30">
+<span class="text-code-sm font-code-sm uppercase">NETWORK_STABLE</span>
+<div class="w-2 h-2 rounded-full bg-primary status-indicator-pulse"></div>
+</div>
+</footer>
+</main>
+<!-- Visual Atmosphere Particles -->
+<div class="fixed inset-0 pointer-events-none z-[-1]" id="atmosphere"><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 77.7925%; top: 17.2295%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 20.8646s linear 8.07998s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 77.2729%; top: 52.653%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 16.9643s linear 4.41652s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 96.7727%; top: 29.095%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 7.04399s linear 8.02919s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 46.5339%; top: 40.7142%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 11.8687s linear 7.23113s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 54.0777%; top: 74.5174%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 21.4366s linear 6.19188s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 42.0891%; top: 9.77274%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 10.6956s linear 3.86305s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 33.5527%; top: 67.5875%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 10.2412s linear 0.780299s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 66.8081%; top: 85.0446%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 13.04s linear 9.20347s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 35.6404%; top: 67.3677%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 17.1151s linear 0.734786s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 18.2981%; top: 88.0155%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 18.8166s linear 5.30193s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 41.5036%; top: 13.7444%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 19.1955s linear 0.975507s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 31.2349%; top: 68.8055%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 20.2531s linear 2.56048s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 78.9359%; top: 79.4758%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 16.8347s linear 9.79578s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 85.3659%; top: 6.14453%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 11.3712s linear 4.755s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 11.7912%; top: 6.30459%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 11.6264s linear 1.71545s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 47.6636%; top: 94.2166%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 15.1027s linear 6.57882s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 55.4268%; top: 93.8445%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 14.6689s linear 0.195287s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 67.8987%; top: 80.3823%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 9.50204s linear 2.26879s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 8.00488%; top: 3.61397%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 7.17916s linear 4.8518s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 5.2749%; top: 60.7023%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 20.2353s linear 0.448103s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 27.4843%; top: 43.4313%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 21.3258s linear 2.6463s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 2.07671%; top: 74.5387%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 7.75833s linear 6.6978s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 33.3589%; top: 91.7209%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 12.4912s linear 9.15532s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 4.16629%; top: 48.1293%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 13.3199s linear 8.28707s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 53.2047%; top: 70.5907%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 15.4873s linear 1.78713s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 51.5951%; top: 18.02%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 9.92338s linear 1.8612s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 2.17966%; top: 51.3424%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 9.00771s linear 6.87451s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 74.0412%; top: 92.1952%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 14.4281s linear 0.638704s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 98.789%; top: 99.4765%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 20.2248s linear 1.5728s infinite normal none running float;"></div><div class="absolute w-[1px] h-[1px] bg-primary/20 rounded-full" style="left: 7.38475%; top: 94.6469%; box-shadow: rgba(0, 220, 229, 0.3) 0px 0px 4px; animation: 14.1477s linear 5.0061s infinite normal none running float;"></div></div>
+<script>
+    // System Clock
+    function updateClock() {
+        const now = new Date();
+        const timeStr = now.getHours().toString().padStart(2, '0') + ':' + 
+                        now.getMinutes().toString().padStart(2, '0') + ':' + 
+                        now.getSeconds().toString().padStart(2, '0');
+        const clockEl = document.getElementById('sys-clock');
+        if (clockEl) clockEl.textContent = timeStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Sidebar Hover Interaction
+    const sidebar = document.getElementById('main-sidebar');
+    
+    sidebar.addEventListener('mouseenter', () => {
+        sidebar.classList.add('expanded');
+    });
+
+    sidebar.addEventListener('mouseleave', () => {
+        sidebar.classList.remove('expanded');
+    });
+
+    // Mobile Toggle
+    sidebar.addEventListener('click', (e) => {
+        if (window.innerWidth < 768 || ('ontouchstart' in window)) {
+            sidebar.classList.toggle('expanded');
+            e.stopPropagation();
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!sidebar.contains(e.target)) {
+            sidebar.classList.remove('expanded');
+        }
+    });
+
+    // Particle background effects
+    const atmosphere = document.getElementById('atmosphere');
+    for (let i = 0; i < 30; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'absolute w-[1px] h-[1px] bg-primary/20 rounded-full';
+        dot.style.left = Math.random() * 100 + '%';
+        dot.style.top = Math.random() * 100 + '%';
+        dot.style.boxShadow = '0 0 4px rgba(0,220,229,0.3)';
+        dot.style.animation = `float ${7 + Math.random() * 15}s linear infinite`;
+        dot.style.animationDelay = `${Math.random() * 10}s`;
+        atmosphere.appendChild(dot);
+    }
+
+    // Smooth scroll for nav links & Active state tracking
+    const sections = ['about', 'experience', 'projects', 'contact'];
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+    sidebarLinks.forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if(href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const element = document.getElementById(section);
+            if (element) {
+                const sectionTop = element.offsetTop - 150;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section;
+                }
+            }
+        });
+
+        sidebarLinks.forEach(link => {
+            link.classList.remove('active');
+            const statusDot = link.querySelector('.status-dot');
+            const icon = link.querySelector('.material-symbols-outlined');
+            
+            if (statusDot) {
+                statusDot.textContent = '○';
+                statusDot.classList.add('text-on-surface-variant/30');
+                statusDot.classList.remove('text-primary');
+            }
+
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+                if (statusDot) {
+                    statusDot.textContent = '●';
+                    statusDot.classList.remove('text-on-surface-variant/30');
+                    statusDot.classList.add('text-primary');
+                }
+            }
+        });
+    });
+</script>
+
+
+</body></html>
